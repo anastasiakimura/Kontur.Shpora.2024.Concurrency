@@ -6,6 +6,7 @@ public class BankAccount
         
     public readonly string OwnerName;
     public long Rubles;
+    public object bankLock;
 
     public override string ToString() => $"{OwnerName} has {Rubles} RUB";
 }

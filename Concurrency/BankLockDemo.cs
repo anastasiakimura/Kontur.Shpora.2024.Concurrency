@@ -29,16 +29,20 @@ public class BankLockDemo
     
     private static void SendMoney(BankAccount from, BankAccount to, long value)
     {
-        if (from.Rubles >= value)
+        lock(from)
+        lock(to)
         {
-            Thread.Sleep(new Random().Next(0, 100));
-            from.Rubles -= value;
-            to.Rubles += value;
-            Console.WriteLine($"Transaction completed: {from.OwnerName} -> {to.OwnerName}: {value}");
-        }
-        else
-        {
-            Console.WriteLine($"Transaction rejected: {from.OwnerName}, нужно больше золота!");
+            if (from.Rubles >= value)
+            {
+                Thread.Sleep(new Random().Next(0, 100));
+                from.Rubles -= value;
+                to.Rubles += value;
+                Console.WriteLine($"Transaction completed: {from.OwnerName} -> {to.OwnerName}: {value}");
+            }
+            else
+            {
+                Console.WriteLine($"Transaction rejected: {from.OwnerName}, нужно больше золота!");
+            }
         }
     }
     
